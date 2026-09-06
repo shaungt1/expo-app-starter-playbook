@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 160 20% 97%;
+    --foreground: 197 20% 12%;
+    --card: 160 25% 99%;
+    --card-foreground: 197 20% 12%;
+    --popover: 160 25% 99%;
+    --popover-foreground: 197 20% 12%;
+    --primary: 162 74% 33%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 160 15% 91%;
+    --secondary-foreground: 197 20% 16%;
+    --muted: 160 15% 91%;
+    --muted-foreground: 190 8% 40%;
+    --accent: 174 80% 40%;
+    --accent-foreground: 0 0% 100%;
+    --success: 162 74% 33%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 30 40% 12%;
+    --destructive: 5 78% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 160 12% 85%;
+    --input: 160 12% 85%;
+    --ring: 162 74% 33%;
+    --radius: 0.75rem;
+
+    --brand: 164 79% 47%;
+    --brand-active: 162 74% 33%;
+    --brand-deep: 166 63% 21%;
+    --edge: 174 95% 44%;
+    --illumination: 38 92% 52%;
+    --illumination-foreground: 30 40% 12%;
+
+    --reading-committed: 197 20% 12%;
+    --reading-pending: 190 8% 42%;
+    --reading-current: 162 74% 33%;
+    --reading-current-foreground: 0 0% 100%;
+    --reading-lowconf: 190 6% 60%;
+    --reading-revised: 174 80% 40%;
+  }
+
+  .dark {
+    --background: 200 11% 5%;
+    --foreground: 160 18% 92%;
+    --card: 202 14% 11%;
+    --card-foreground: 160 18% 92%;
+    --popover: 167 40% 9%;
+    --popover-foreground: 160 18% 92%;
+    --primary: 164 79% 47%;
+    --primary-foreground: 200 15% 6%;
+    --secondary: 202 14% 14%;
+    --secondary-foreground: 160 18% 92%;
+    --muted: 202 12% 15%;
+    --muted-foreground: 165 8% 62%;
+    --accent: 174 95% 52%;
+    --accent-foreground: 190 60% 6%;
+    --success: 164 79% 47%;
+    --success-foreground: 200 15% 6%;
+    --warning: 38 92% 56%;
+    --warning-foreground: 30 40% 8%;
+    --destructive: 5 72% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 168 20% 18%;
+    --input: 168 18% 16%;
+    --ring: 164 79% 47%;
+
+    --brand: 164 79% 47%;
+    --brand-active: 162 74% 33%;
+    --brand-deep: 166 63% 21%;
+    --edge: 174 95% 52%;
+    --illumination: 38 92% 56%;
+    --illumination-foreground: 30 40% 8%;
+
+    --reading-committed: 160 18% 92%;
+    --reading-pending: 165 8% 62%;
+    --reading-current: 164 79% 47%;
+    --reading-current-foreground: 200 15% 6%;
+    --reading-lowconf: 165 6% 45%;
+    --reading-revised: 174 95% 52%;
+  }
+}
