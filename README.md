@@ -1,4 +1,4 @@
-# KEEL — Expo App Starter Stack
+# Expo App Starter Stack
 
 > Production-ready Expo + React Native (TypeScript) starter stack for cross-platform iOS & Android apps.
 > Batteries included: NativeWind/Tailwind dark-mode theming, React Native Reusables UI, Expo Router,
