@@ -63,9 +63,9 @@ subscriptions, analytics, notifications, and CI. The table below is the source y
 | **Name** | expo-app-template (Simonstorms) |
 | **URL** | https://github.com/Simonstorms/expo-app-template |
 | **License** | MIT — free to use commercially; keep `LICENSE`, add a `NOTICE` crediting the source |
-| **Framework** | Expo SDK 57, React Native 0.86, React 19, expo-router, TypeScript |
+| **Framework** | Audit snapshot: Expo SDK 57, React Native 0.86, React 19, expo-router, TypeScript. Read the cloned `package.json` and lockfile for the current source of truth. |
 | **Package manager** | **bun** (npm-equivalent; faster) — https://bun.sh |
-| **Run type** | **Development-build template** — ships native module versions newer than Expo Go; treat as a Dev Build app |
+| **Run type** | **Development-build template** — optional native modules require a Dev Build; guarded core/demo paths may also run in Expo Go or web |
 
 **What the repo already includes (batteries):**
 
@@ -515,6 +515,19 @@ External services the app can use; most have free tiers.
 
 ---
 
+## Automation entry points
+
+Use [`QUICKSTART.md`](QUICKSTART.md) for the human workflow or [`AGENT_START.md`](AGENT_START.md) for
+the required agent sequence. `bash start.sh help` lists the executable commands. The automation can
+bootstrap a detached app, configure its identity, install and verify an existing app, start each Expo
+runtime surface, install one optional capability at a time, and perform guarded EAS releases.
+
+Optional capabilities and their runtime/configuration requirements live in
+[`config/capabilities.json`](config/capabilities.json). The catalog is a menu, not a default install
+list.
+
+---
+
 ## Reusable code files (`code/` folder)
 
 These drop-in files implement the patterns above; copy them into a new project's matching paths.
@@ -527,6 +540,8 @@ These drop-in files implement the patterns above; copy them into a new project's
 | `haptics.ts` | `src/…/` | haptics helper, guarded for web/Expo Go |
 | `babel.config.js`, `metro.config.js`, `tailwind.config.js`, `global.css` | project root | NativeWind wiring + design tokens |
 | `check-system.mjs` | `scripts/` | reports host specs + emulator/AI feasibility (`node scripts/check-system.mjs`) |
+| `env.example` | `.env.example` | generic client-visible environment contract; server secrets are deliberately excluded |
+| `gitattributes` | `.gitattributes` | stable LF source/shell endings across Windows, macOS, and Linux |
 
 ---
 

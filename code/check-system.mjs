@@ -37,11 +37,13 @@ function freeDiskGb() {
 }
 
 function mark(ok) {
-  return ok ? 'OK ' : 'MISSING';
+  return ok ? 'OK ' : 'ACTION';
 }
 
 function main() {
   const platform = os.platform();
+  const [nodeMajor, nodeMinor] = process.versions.node.split('.').map(Number);
+  const nodeReady = nodeMajor > 22 || (nodeMajor === 22 && nodeMinor >= 18);
   const totalGb = os.totalmem() / GB;
   const freeGb = os.freemem() / GB;
   const cpus = os.cpus();
@@ -50,7 +52,11 @@ function main() {
   const disk = freeDiskGb();
 
   const tools = [
-    detectTool('node', 'node --version'),
+    {
+      name: 'node >=22.18',
+      present: nodeReady,
+      version: `${process.version}${nodeReady ? '' : ' (upgrade required)'}`,
+    },
     detectTool('bun', 'bun --version'),
     detectTool('git', 'git --version'),
     detectTool('java', platform === 'win32' ? 'java -version 2>&1' : 'java -version'),
@@ -71,7 +77,7 @@ function main() {
   const emulatorComfortable = emulatorReady && totalGb >= 8 && (disk === null || disk >= 15);
 
   console.log(line('='));
-  console.log(' LUMNI — Host System Capability Report');
+  console.log(' Expo App Starter — Host System Capability Report');
   console.log(line('='));
   console.log(`OS            : ${platform} ${os.release()} (${os.arch()})`);
   console.log(`CPU           : ${cores} cores — ${cpuModel}`);
@@ -90,12 +96,12 @@ function main() {
   console.log(' Verdict');
   console.log(line());
   console.log(
-    `  Expo Go (themes, screens, gestures, animations, mock reading, cloud APIs):`
+    `  Expo Go (themes, screens, gestures, animations, mock data, cloud APIs):`
   );
   console.log(
-    hasBun
-      ? '     READY. Run `bun run start`, press s for Expo Go, scan the QR on your phone.'
-      : '     Install bun first (npm i -g bun), then `bun run start`.'
+    hasBun && nodeReady
+      ? '     READY. From the playbook, run `bash start.sh run <app> go`.'
+      : '     NOT READY. Install Node 22.18+ and Bun, then run `bash start.sh setup <app>`.'
   );
   console.log('');
   console.log('  Android emulator (dev client, UI + on-device speech):');
@@ -109,14 +115,14 @@ function main() {
     if (!androidHome) missing.push('ANDROID_HOME + Android SDK');
     if (!hasEmulator) missing.push('emulator');
     if (!hasAdb) missing.push('adb/platform-tools');
-    console.log(`     NOT READY. Missing: ${missing.join(', ')}. See docs/DEV-CLIENT-AND-ANDROID.md`);
+    console.log(`     NOT READY. Missing: ${missing.join(', ')}. See QUICKSTART.md.`);
   }
   console.log('');
   console.log('  AI workloads — where each can run:');
   console.log('     Cloud LLM/VLM (OpenAI/Anthropic/Grok via fetch) : ANY target incl. Expo Go.');
   console.log('     On-device OCR (ML Kit)                          : physical device only.');
   console.log('     On-device LLM/VLM (llama.rn / ONNX)             : physical device (NPU/GPU),');
-  console.log('        or run as standalone scripts under scripts/ai/ on this host — NOT the emulator.');
+  console.log('        or run as standalone scripts on this host — NOT the emulator.');
   console.log('     Emulator does NOT accelerate on-device AI; use scripts or a real phone.');
 
   console.log(line());
@@ -124,6 +130,9 @@ function main() {
   console.log(line());
   if (totalGb < 8) {
     console.log('  * < 8 GB RAM: emulator will be slow. Use Expo Go on a real phone as the main loop.');
+  }
+  if (!nodeReady) {
+    console.log('  * Current template and Supabase client tooling require Node 22.18+.');
   }
   console.log('  * Genymotion is an emulator alternative, but it still cannot run on-device AI models;');
   console.log('    it helps UI testing only. For AI, use cloud (Expo Go), node scripts, or a real phone.');

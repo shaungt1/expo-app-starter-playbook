@@ -21,7 +21,7 @@ function createMemoryStore(): KeyValueStore {
 
 function createNativeStore(): KeyValueStore {
   const mmkv = require('react-native-mmkv') as typeof import('react-native-mmkv');
-  const instance = mmkv.createMMKV({ id: 'lumni-preferences' });
+  const instance = mmkv.createMMKV({ id: 'app-preferences' });
   return {
     getString: (key) => instance.getString(key),
     set: (key, value) => instance.set(key, value),

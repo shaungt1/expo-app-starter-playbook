@@ -1,77 +1,84 @@
-# Expo App Starter Stack
+# Expo App Starter Playbook
 
-> Production-ready Expo + React Native (TypeScript) starter stack for cross-platform iOS & Android apps.
-> Batteries included: NativeWind/Tailwind dark-mode theming, React Native Reusables UI, Expo Router,
-> Supabase auth, Drizzle + SQLite, plus an Expo Go & dev-build setup guide with every common pitfall
-> already solved.
+A reusable, agent-friendly system for turning the
+[`Simonstorms/expo-app-template`](https://github.com/Simonstorms/expo-app-template) foundation into an
+independent Expo application. It combines a proven setup order, reusable code, capability selection,
+host checks, and guarded release commands.
 
----
+This repository is a **playbook and automation kit**, not an application. It uses the LUMNI mobile
+project as a proven implementation reference while keeping generated apps generic and independently
+owned.
 
-## What this is
+## Start here
 
-A **repeatable foundation for building new mobile apps** on a proven Expo + React Native stack. Instead
-of starting from scratch (and re-hitting the same setup and Expo Go vs. development-build pitfalls), you
-fork one base template, follow the setup guide here, and reach a **running, themed, batteries-included
-app foundation** before designing a single product screen.
+- **Human quick start:** [`QUICKSTART.md`](QUICKSTART.md)
+- **Agent entry point:** [`AGENT_START.md`](AGENT_START.md)
+- **Full technical guide:** [`expo-app-starter-playbook.md`](expo-app-starter-playbook.md)
+- **What changed:** [`docs/CHANGELOG.md`](docs/CHANGELOG.md)
+- **Template ownership plan:** [`docs/TEMPLATE_ADOPTION_PLAN.md`](docs/TEMPLATE_ADOPTION_PLAN.md)
 
-Use it yourself, or hand it to an AI agent: *"Build a new mobile app with these features using this
-stack,"* point them at the guide, and they set everything up correctly first, then build screens.
+## Fastest path
 
-## What's inside this repo
+From Git Bash, WSL, macOS, or Linux:
+
+```bash
+bash start.sh system
+bash start.sh bootstrap ../my-app \
+  --name "My App" \
+  --slug my-app \
+  --bundle-id com.example.myapp
+cd ../my-app
+bunx expo start --web
+```
+
+The bootstrap script clones the upstream template, records its exact source commit in `NOTICE`,
+removes the upstream Git metadata, initializes a new `main` branch, configures the app identity,
+creates `.env` from `.env.example`, installs locked dependencies, and runs verification. It does not
+create or push a remote repository.
+
+To work with an existing app instead:
+
+```bash
+bash start.sh setup ../existing-app
+bash start.sh verify ../existing-app
+bash start.sh capabilities list
+bash start.sh capabilities show supabase-auth
+```
+
+## What is included
 
 | Path | Purpose |
 |---|---|
-| [`expo-app-starter-playbook.md`](expo-app-starter-playbook.md) | The full setup guide: base repo, install steps, Expo Go vs. dev-build guards, theme planning, screen/logic phase, and an appendix of proven packages/services. |
-| [`code/`](code/) | Drop-in reusable files (environment + storage guards, NativeWind config, design tokens, a host system-check script) to copy into a new project. |
+| `start.sh` | Single command/menu entry point for setup, verification, running, capabilities, and releases. |
+| `scripts/startup/` | Reusable shell automation and small Node helpers. |
+| `config/capabilities.json` | Optional feature catalog: UI, auth, SQLite, sync, payments, analytics, notifications, BLE/IoT, camera, audio, and AI. |
+| `code/` | Drop-in NativeWind, environment, storage, haptics, theme, and host-check files. |
+| `QUICKSTART.md` | Automated and manual setup instructions. |
+| `AGENT_START.md` | Required staged workflow for coding agents. |
+| `expo-app-starter-playbook.md` | Detailed architecture, package, and platform reference. |
 
-## How to use it (the flow)
+## Core rules
 
-The guide is ordered on purpose — do not skip ahead to screens:
+1. Prove the untouched template works before adding features.
+2. Install one capability at a time and rerun verification after each.
+3. Use Expo Go only for Expo-Go-compatible modules; use a development build for custom native code.
+4. Keep client-visible `EXPO_PUBLIC_*` values separate from server secrets.
+5. Never publish, submit, or overwrite a remote without an explicit user decision.
+6. Preserve the upstream MIT `LICENSE` and a `NOTICE` containing the source URL and commit.
 
-1. **Set up the repo** — fork the base template, detach its Git history, make it your own project,
-   install the foundation packages, wire the UI, choose Expo Go or a development build, and **confirm the
-   empty app runs.**
-2. **Define the theme** — answer the brand/color questions, apply the tokens, confirm light/dark.
-3. **Build screens, APIs & logic** — mock-first, reusing what the template already ships.
-4. **Pull packages as needed** — from the categorized appendix tables.
+## Requirements
 
-Full details, commands, and links are in [`expo-app-starter-playbook.md`](expo-app-starter-playbook.md).
+- Git
+- Node.js 22.18 or newer (the current `.mts` tooling requirement; follow the target's `.nvmrc`)
+- Bun
+- Bash (Git Bash or WSL on Windows)
+- Optional: Android Studio/JDK for local Android native builds; macOS/Xcode for local iOS builds;
+  an Expo account for EAS cloud builds and updates
 
-## Quick start
+Run `bash start.sh system` for a read-only host report.
 
-```bash
-# 1. Fork the base template into your app folder and detach it
-git clone https://github.com/Simonstorms/expo-app-template.git <your-app>
-cd <your-app> && rm -rf .git && git init && git branch -M main
+## Credits and license
 
-# 2. Install + verify (see the guide for the dedupe/trust steps)
-bun install && bunx expo-doctor && bun run typecheck && bun run lint
-
-# 3. Configure env (empty is fine for the demo) and run
-cp .env.example .env
-bunx expo start --web     # fastest preview; or --tunnel for Expo Go on a phone
-```
-
-> Then follow the guide from **Section 1.5** onward to add the UI foundation, theme, and screens.
-
-## Key things to know first
-
-- **Two ways to run:** *Expo Go* (quick, standard-SDK apps only) vs. a *development build* (required
-  once you add custom native modules like Bluetooth, camera, Skia, or on-device AI). The guide explains
-  both and includes the guards that let one codebase run on web, Expo Go, and a dev build.
-  See: https://docs.expo.dev/develop/development-builds/introduction/
-- **Confirm the foundation runs before building screens.** The most common failure is stacking packages
-  and screens before ever launching the app.
-- **Keep secrets out of Git.** `.env` and any token files stay git-ignored.
-
-## Maintaining this stack
-
-The appendix package/service tables are a living menu of **proven-working** dependencies. When you adopt
-or retire a package on a real project, **update the tables** so the list stays a reliable source for the
-next app.
-
-## Credits & license
-
-Built on the MIT-licensed [`Simonstorms/expo-app-template`](https://github.com/Simonstorms/expo-app-template).
-Retain its `LICENSE`/`NOTICE` when you fork. This starter documentation and the `code/` helpers are
-provided for internal reuse.
+Generated applications are derived from Simon Gneuß's MIT-licensed Expo App Template. Preserve its
+`LICENSE` and attribution. This playbook's automation and documentation are maintained separately;
+review the target application's licenses before distribution.

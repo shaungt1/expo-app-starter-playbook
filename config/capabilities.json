@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "capabilities": [
+    {
+      "id": "ui-foundation",
+      "name": "UI, theme, gestures, and animation",
+      "requiresDevBuild": false,
+      "expo": [
+        "react-native-reanimated",
+        "react-native-gesture-handler",
+        "react-native-safe-area-context",
+        "react-native-screens",
+        "react-native-svg",
+        "expo-haptics",
+        "expo-linear-gradient",
+        "expo-system-ui"
+      ],
+      "packages": [
+        "nativewind",
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "tailwindcss-animate",
+        "lucide-react-native"
+      ],
+      "devPackages": ["tailwindcss@^3.4.17", "prettier-plugin-tailwindcss"],
+      "env": [],
+      "steps": [
+        "Copy/adapt the files in code/ and import global.css once in the root layout.",
+        "Add only the accessible UI primitives the application needs.",
+        "Verify light/dark tokens, reduced motion, touch targets, and screen-reader labels."
+      ]
+    },
+    {
+      "id": "supabase-auth",
+      "name": "Supabase data and authentication",
+      "requiresDevBuild": false,
+      "expo": ["expo-secure-store", "expo-web-browser", "expo-linking", "expo-apple-authentication", "expo-crypto"],
+      "packages": ["@supabase/supabase-js", "@react-native-async-storage/async-storage", "react-native-url-polyfill"],
+      "devPackages": [],
+      "env": ["EXPO_PUBLIC_SUPABASE_URL", "EXPO_PUBLIC_SUPABASE_ANON_KEY"],
+      "steps": [
+        "Check Data API schema exposure and role grants, then enable RLS with least-privilege ownership policies on every exposed table.",
+        "Use secure chunked session storage on native and a deliberate web fallback.",
+        "Align the Expo scheme, Supabase redirect allow-list, and Apple/Google provider callbacks.",
+        "Use app_metadata rather than user-editable user_metadata for authorization; give UPDATE policies both USING and WITH CHECK ownership predicates.",
+        "Test native Apple/Google identity-token flows in a development build and keep provider secrets in their dashboards/server configuration.",
+        "Implement reachable in-app account deletion and regenerate typed database definitions."
+      ]
+    },
+    {
+      "id": "sqlite-drizzle",
+      "name": "Offline SQLite with Drizzle ORM",
+      "requiresDevBuild": false,
+      "expo": ["expo-sqlite"],
+      "packages": ["drizzle-orm"],
+      "devPackages": ["drizzle-kit", "expo-drizzle-studio-plugin"],
+      "env": [],
+      "steps": [
+        "Define schema and migrations under a dedicated data layer; never mutate production schema ad hoc.",
+        "Add repository interfaces and migration tests before replacing mock data.",
+        "Decide backup, reset, account deletion, and schema downgrade behavior."
+      ]
+    },
+    {
+      "id": "electric-sync",
+      "name": "ElectricSQL/Postgres offline synchronization",
+      "requiresDevBuild": false,
+      "manualOnly": true,
+      "expo": [],
+      "packages": [],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Choose the current Electric client and deployment model from official ElectricSQL documentation.",
+        "Design authenticated shapes, Postgres permissions, conflicts, tombstones, and migrations.",
+        "Prove offline write, reconnect, conflict, multi-device convergence, and account deletion end to end.",
+        "Add packages only after the architecture is approved; LUMNI does not yet provide a proven implementation."
+      ]
+    },
+    {
+      "id": "payments",
+      "name": "RevenueCat subscriptions and paywall",
+      "requiresDevBuild": true,
+      "expo": [],
+      "packages": ["react-native-purchases", "react-native-purchases-ui"],
+      "devPackages": [],
+      "env": [
+        "EXPO_PUBLIC_REVENUECAT_IOS_KEY",
+        "EXPO_PUBLIC_REVENUECAT_ANDROID_KEY",
+        "EXPO_PUBLIC_REVENUECAT_ENTITLEMENT"
+      ],
+      "steps": [
+        "Create store products, offerings, entitlement, legal URLs, and sandbox testers.",
+        "Gate the native SDK behind configured keys and a physical-device check.",
+        "Test purchase, restore, cancellation/error, offline entitlement grace, and account deletion."
+      ]
+    },
+    {
+      "id": "analytics",
+      "name": "PostHog analytics and optional Sentry errors",
+      "requiresDevBuild": true,
+      "expo": ["expo-file-system", "expo-application", "expo-device"],
+      "packages": ["posthog-react-native", "@posthog/react-native-plugin", "@sentry/react-native"],
+      "devPackages": [],
+      "env": ["EXPO_PUBLIC_POSTHOG_KEY", "EXPO_PUBLIC_POSTHOG_HOST", "EXPO_PUBLIC_POSTHOG_SESSION_REPLAY"],
+      "steps": [
+        "Define a typed event map and identity reset behavior before instrumenting screens.",
+        "Default session replay off until consent and privacy disclosures are approved.",
+        "Configure Sentry through its official Expo setup and keep tokens out of the client bundle."
+      ]
+    },
+    {
+      "id": "notifications",
+      "name": "Push and local notifications",
+      "requiresDevBuild": true,
+      "expo": ["expo-notifications", "expo-device", "expo-constants"],
+      "packages": [],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Ask permission in product context rather than at first launch.",
+        "Configure platform credentials, channels/categories, deep-link intent handling, and token rotation.",
+        "Test foreground, background, killed, denied, and notification-tap behavior on physical devices."
+      ]
+    },
+    {
+      "id": "ble",
+      "name": "Bluetooth Low Energy",
+      "requiresDevBuild": true,
+      "expo": [],
+      "packages": ["react-native-ble-plx"],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Add the config plugin and purpose-specific iOS/Android permission text.",
+        "Model scan, connect, service discovery, reconnect, timeout, firmware, and transport errors.",
+        "Test on physical Android and iOS devices; emulators and Expo Go are not valid BLE tests."
+      ]
+    },
+    {
+      "id": "iot-network",
+      "name": "MQTT, sockets, UDP, and local discovery",
+      "requiresDevBuild": true,
+      "expo": ["expo-network"],
+      "packages": ["mqtt", "react-native-tcp-socket", "react-native-udp", "react-native-zeroconf"],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Choose only the transport protocols the device actually uses.",
+        "Document TLS, credentials/provisioning, discovery, retry/backoff, offline behavior, and local-network permissions.",
+        "Use a transport interface and mock implementation so UI work does not require hardware."
+      ]
+    },
+    {
+      "id": "camera-vision",
+      "name": "Camera, image selection, and on-device OCR",
+      "requiresDevBuild": true,
+      "expo": ["expo-camera", "expo-image-picker", "expo-image-manipulator"],
+      "packages": ["react-native-vision-camera", "react-native-worklets-core", "@react-native-ml-kit/text-recognition"],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Use Expo Camera alone unless frame processors or specialized native vision justify Vision Camera.",
+        "Add camera/photo permission copy and a denied/restricted fallback.",
+        "Test orientation, memory pressure, low light, cancellation, and real-device OCR."
+      ]
+    },
+    {
+      "id": "audio-speech",
+      "name": "Audio recording, playback, speech, and transcription",
+      "requiresDevBuild": true,
+      "expo": ["expo-audio", "expo-speech"],
+      "packages": ["expo-speech-recognition", "react-native-audio-api", "react-native-track-player"],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Install only recording, speech recognition, DSP, or background playback pieces the app needs.",
+        "Declare microphone/background-audio permissions and define interruption/headphone behavior.",
+        "Test on physical devices with permissions denied and audio sessions interrupted."
+      ]
+    },
+    {
+      "id": "cloud-ai",
+      "name": "Server-mediated cloud AI",
+      "requiresDevBuild": false,
+      "expo": [],
+      "packages": ["ai", "openai", "@anthropic-ai/sdk", "zod"],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Call providers through an authenticated server/edge function; never bundle provider secret keys.",
+        "Add structured output validation, timeouts, cancellation, usage/cost logging, and safe error messages.",
+        "Define data retention and user disclosure for content sent to providers."
+      ]
+    },
+    {
+      "id": "on-device-ai",
+      "name": "On-device ONNX or llama.cpp models",
+      "requiresDevBuild": true,
+      "expo": [],
+      "packages": ["onnxruntime-react-native", "llama.rn"],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Select one runtime only after benchmarking model size, RAM, latency, thermals, and supported devices.",
+        "Plan model download, integrity, licensing, versioning, storage, eviction, and offline failure UI.",
+        "Test release builds on representative physical devices; emulators are not performance evidence."
+      ]
+    }
+  ]
+}
