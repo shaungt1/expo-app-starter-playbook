@@ -1,0 +1,38 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "src/app/**/*.{ts,tsx}",
+    "src/components/ui/*.{ts,tsx}",
+    "src/constants/theme.ts",
+    "src/core/**/*.{ts,tsx}",
+    "src/features/paywall/api.ts",
+    "src/hooks/use-persist-hydrated.ts",
+    "src/constants/config.ts",
+    "src/lib/analytics.tsx",
+    "src/lib/notifications.ts",
+    "src/lib/revenuecat-ui.ts",
+    "plugins/*.js"
+  ],
+  "project": ["src/**/*.{ts,tsx}", "plugins/*.js"],
+  "ignoreExportsUsedInFile": true,
+  "ignoreDependencies": [
+    "expo-atlas",
+    "expo-haptics",
+    "eslint-plugin-expo",
+    "eslint-plugin-react-hooks",
+    "eslint-plugin-react-native",
+    "eslint-plugin-react-native-a11y",
+    "oxlint-plugin-react-doctor",
+    "ultracite",
+    "@hookform/resolvers",
+    "drizzle-kit",
+    "expo-camera",
+    "expo-clipboard",
+    "expo-document-picker",
+    "expo-image-picker",
+    "expo-network",
+    "expo-sharing",
+    "react-hook-form",
+    "zod"
+  ]
+}

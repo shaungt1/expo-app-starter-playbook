@@ -1,0 +1,6 @@
+project_id = "expoapptemplate"
+
+[auth]
+enable_anonymous_sign_ins = false
+site_url = "expoapptemplate://"
+additional_redirect_urls = ["expoapptemplate://", "expoapptemplate://**"]

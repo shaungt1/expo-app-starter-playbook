@@ -1,0 +1,14 @@
+{
+  "name": "Launchpad",
+  "slug": "launchpad",
+  "scheme": "launchpad",
+  "bundleId": "com.example.launchpad",
+  "theme": {
+    "primary": "221 83% 53%",
+    "accent": "199 89% 48%",
+    "background": "210 33% 98%",
+    "foreground": "222 47% 11%",
+    "radius": "0.75rem"
+  },
+  "capabilities": ["core", "supabase-auth", "payments", "analytics"]
+}

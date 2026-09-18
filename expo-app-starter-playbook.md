@@ -110,21 +110,20 @@ Build; the first three are always required.
 > install **Watchman**; on **Linux** use your package manager. **iOS builds require a Mac with Xcode** —
 > on Windows/Linux, build iOS in the cloud with EAS.
 
-### 1.2 Fork and detach from the original GitHub project
+### 1.2 Generate an independent application
 
-You are creating your own app, not contributing to the template, so remove its Git history and re-init
-your own. This prevents you from accidentally running/committing against two GitHub projects.
+Use the owned local template for normal work. The generator refuses a non-empty target, applies one
+identity/theme plan, records upstream provenance, and initializes an independent `main` branch.
 
 ```bash
-git clone https://github.com/Simonstorms/expo-app-template.git <your-app-folder>
+cp starter/project-plan.example.json ../my-plan.json
+# Edit the plan.
+bash start.sh create <your-app-folder> --plan ../my-plan.json --install
 cd <your-app-folder>
-rm -rf .git            # detach from the template's GitHub project
-git init && git branch -M main
-# keep LICENSE; add a NOTICE file crediting the MIT source + the commit you forked
 ```
 
-Name `<your-app-folder>` after your app (e.g. `neuroflow-mobile`, `syncrio-mobile`). Also remove or
-replace the template's own `.github/` workflows if you don't want its CI, and its demo `README`.
+Use `bash start.sh bootstrap ...` only when you deliberately need a new clone of the preserved upstream
+project. Direct clones require detaching upstream Git metadata and removing the product demo manually.
 
 **Make it your own project.** Create a fresh, empty GitHub repo for your app, point Git at it, and make
 the first commit so the fork becomes a permanent, independent project:

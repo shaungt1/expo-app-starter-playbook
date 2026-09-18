@@ -125,6 +125,34 @@
       ]
     },
     {
+      "id": "device-files",
+      "name": "Documents, media library, clipboard, and sharing",
+      "requiresDevBuild": false,
+      "expo": ["expo-file-system", "expo-document-picker", "expo-image-picker", "expo-sharing", "expo-clipboard"],
+      "packages": [],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Choose cache, document, and user-export lifecycles; do not treat a picked URI as permanent storage.",
+        "Use copyToCacheDirectory when a picked document must be read immediately, then validate MIME type and size.",
+        "Test cancellation, low storage, missing providers, large files, exports, and account-deletion cleanup."
+      ]
+    },
+    {
+      "id": "device-sensors",
+      "name": "Motion, orientation, pressure, light, and pedometer sensors",
+      "requiresDevBuild": false,
+      "expo": ["expo-sensors"],
+      "packages": [],
+      "devPackages": [],
+      "env": [],
+      "steps": [
+        "Select only the sensors and sampling rate the product needs; high-frequency streams affect battery and privacy.",
+        "Add purpose-specific motion permission text and unsubscribe whenever the consuming screen backgrounds or unmounts.",
+        "Test unsupported hardware, denied permission, backgrounding, calibration, and real-device sampling limits."
+      ]
+    },
+    {
       "id": "ble",
       "name": "Bluetooth Low Energy",
       "requiresDevBuild": true,

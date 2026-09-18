@@ -9,6 +9,10 @@ usage() {
 Usage: bash start.sh COMMAND [arguments]
 
 Commands:
+  create TARGET --plan PLAN.json [--install]
+      Generate from the owned local template and apply identity/theme from one plan.
+  starter verify
+      Verify generator tests and the owned template.
   system
       Read-only host capability report.
   bootstrap TARGET --name NAME --slug SLUG --bundle-id ID [options]
@@ -36,6 +40,13 @@ command="${1:-help}"
 if (($#)); then shift; fi
 
 case "$command" in
+  create) node "$ROOT/starter/generator/create-app.mjs" "$@" ;;
+  starter)
+    subcommand="${1:-}"
+    if [[ "$subcommand" != "verify" ]]; then usage; exit 2; fi
+    node --test "$ROOT/tests/generator.test.mjs"
+    bash "$ROOT/starter/template/scripts/verify.sh"
+    ;;
   system) node "$ROOT/code/check-system.mjs" "$@" ;;
   bootstrap) bash "$STARTUP/bootstrap.sh" "$@" ;;
   setup) bash "$STARTUP/setup.sh" "$@" ;;

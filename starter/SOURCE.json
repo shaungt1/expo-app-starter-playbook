@@ -1,0 +1,8 @@
+{
+  "upstream": "https://github.com/Simonstorms/expo-app-template.git",
+  "commit": "888b9e131bdab4354c2bff7ea1fb744667269b10",
+  "captured": "2026-09-18",
+  "license": "MIT",
+  "snapshot": "upstream-snapshot",
+  "ownedTemplate": "template"
+}

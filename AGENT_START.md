@@ -25,7 +25,8 @@ Ask only for decisions that cannot be safely inferred. Record the answers in the
 ### Identity and ownership
 
 - App name, slug, URL scheme, organization/reverse-DNS bundle ID, platforms, and repository remote.
-- Whether this is a fresh bootstrap or an existing Expo app.
+- Whether this is a new app generated from `starter/template`, a deliberate direct-upstream bootstrap,
+  or an existing Expo app.
 - Upstream template ref/commit if reproducibility requires a specific revision.
 
 ### Runtime surface
@@ -54,8 +55,10 @@ Never collapse these gates into one large unverified change.
 
 1. **Inspect:** confirm Git cleanliness, project instructions, runtime versions, lockfile, scripts,
    environment contract, app identity, and current native modules. Do not overwrite user changes.
-2. **Bootstrap or baseline:** for a new app use `bash start.sh bootstrap ...`; for an existing app use
-   `bash start.sh setup <app>`. Preserve `LICENSE`/`NOTICE` and detach upstream `.git` metadata.
+2. **Generate or baseline:** for a new app copy `starter/project-plan.example.json`, fill in identity and
+   theme, then use `bash start.sh create <app> --plan <plan> --install`. Use `bootstrap` only when the
+   user explicitly wants a fresh upstream clone. For an existing app use `bash start.sh setup <app>`.
+   Preserve `LICENSE`/source records and keep generated Git history independent.
 3. **Baseline gate:** run `bash start.sh verify <app>`. If the baseline fails, stop feature installs and
    diagnose the baseline first.
 4. **Identity and environment:** configure app identifiers and create `.env` from `.env.example`.

@@ -12,7 +12,18 @@ bash start.sh system
 Git, Node.js 22.18+, and Bun are the core requirements. Android Studio/JDK are needed only for local
 Android native builds; Xcode requires macOS; EAS can build in the cloud.
 
-## 2A. Create a new independent application
+## 2A. Create a new independent application from the owned template
+
+```bash
+cp starter/project-plan.example.json ../my-app-plan.json
+# Edit name, identifiers, theme, and intended capabilities.
+bash start.sh create ../my-app --plan ../my-app-plan.json --install
+```
+
+This is the recommended path. It uses the generic, locally owned template under `starter/template`,
+not a live upstream clone. The plan is copied into the generated app as its reproducible product contract.
+
+## 2B. Bootstrap the preserved upstream template directly
 
 ```bash
 bash start.sh bootstrap ../my-app \
@@ -38,7 +49,7 @@ MIT license, removes only the newly cloned target's `.git`, initializes `main`, 
 remote or commit on your behalf. It also preserves LF source endings on Windows so the template's
 formatter produces the same result on every platform.
 
-## 2B. Prepare an existing application
+## 2C. Prepare an existing application
 
 ```bash
 bash start.sh setup ../existing-app

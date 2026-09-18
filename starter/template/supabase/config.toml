@@ -1,0 +1,6 @@
+project_id = "launchpad"
+
+[auth]
+enable_anonymous_sign_ins = false
+site_url = "launchpad://"
+additional_redirect_urls = ["launchpad://", "launchpad://**"]
